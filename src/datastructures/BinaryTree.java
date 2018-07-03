@@ -179,4 +179,44 @@ public class BinaryTree {
 
         return traversal;
     }
+
+    public int treeHeight(){
+        return treeHeight_Helper(root);
+    }
+
+    private int treeHeight_Helper(Node root) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return 1;
+        return Math.max(treeHeight_Helper(root.left), treeHeight_Helper(root.right)) + 1;
+    }
+
+    public int getLargestLengthData() {
+        if (root == null) throw new NullPointerException("The tree is null!");
+        return getLargestLengthData_Helper(root);
+    }
+
+    private int getLargestLengthData_Helper(Node root) {
+        if (root == null) return -1;
+        int leftMax = Math.max(String.valueOf(root.data).length(), getLargestLengthData_Helper(root.left));
+        int rightMax = Math.max(String.valueOf(root.data).length(), getLargestLengthData_Helper(root.right));
+        return Math.max(leftMax, rightMax);
+    }
+
+    public List<Integer> breadthFirstTraversal() {
+        List<Integer> traversal = new ArrayList<>();
+        Queue<Node> nodeQueue = new LinkedList<>();
+        if (root == null) return traversal;
+
+        nodeQueue.add(root);
+        while (nodeQueue.size() != 0) {
+            Node node = nodeQueue.poll();
+            traversal.add(node.data);
+            if (node.left != null)
+                nodeQueue.add(node.left);
+            if (node.right != null)
+                nodeQueue.add(node.right);
+        }
+
+        return traversal;
+    }
 }

@@ -2,6 +2,7 @@ package datastructures;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class BinaryTreeTest {
     private static BinaryTree testTree = null;
 
     @BeforeEach
-    static void buildTestTree() {
+    void buildTestTree() {
         // 1 -> 2,3 -> 4,5,-,-
         testTree = new BinaryTree(1);
         testTree.root.left = new BinaryTree.Node(2);
@@ -73,5 +74,32 @@ class BinaryTreeTest {
         testTree.root.right.right = new BinaryTree.Node(7);
         traversal = testTree.preOrderTraversal_Iterative();
         assertThat(traversal, is(Arrays.asList(1,2,4,5,3,6,7)));
+    }
+
+    @Test
+    void treeHeight() {
+        assertEquals(3, testTree.treeHeight());
+
+        testTree = new BinaryTree(1);
+        assertEquals(1, testTree.treeHeight());
+    }
+
+    @Test
+    void getLargestLengthData() {
+        assertEquals(1, testTree.getLargestLengthData());
+
+        testTree = new BinaryTree(10);
+        assertEquals(2, testTree.getLargestLengthData());
+    }
+
+    @Test
+    void breadthFirstTraversal() {
+        List<Integer> traversal = testTree.breadthFirstTraversal();
+        assertThat(traversal, is(Arrays.asList(1,2,3,4,5)));
+
+        testTree.root.right.left = new BinaryTree.Node(6);
+        testTree.root.right.right = new BinaryTree.Node(7);
+        traversal = testTree.breadthFirstTraversal();
+        assertThat(traversal, is(Arrays.asList(1,2,3,4,5,6,7)));
     }
 }
